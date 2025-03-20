@@ -45,7 +45,8 @@ spec:
       hostPath:
         path: ./
     - name: db-data
-      emptyDir: {}
+      persistentVolumeClaim:
+        claimName: rails8-podman-pv-claim
     - name: db-init
       hostPath:
         path: ./docker/db/init.d
