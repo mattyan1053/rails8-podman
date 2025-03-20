@@ -1,0 +1,22 @@
+default: &default
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: 127.0.0.1
+  username: app
+  password: password
+  timeout: 5000
+  ssl_mode: :required
+
+test:
+  primary:
+    <<: *default
+    database: app_test
+  cache:
+    <<: *default
+    database: app_test_cache
+  queue:
+    <<: *default
+    database: app_test_queue
+  cable:
+    <<: *default
+    database: app_test_cable

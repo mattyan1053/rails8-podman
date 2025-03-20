@@ -56,6 +56,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      db:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: app
+          MYSQL_PASSWORD: password
+          TZ: Asia/Tokyo
+        ports:
+          - 3306:3306
+        options: --health-cmd "mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     # services:
     #  redis:
     #    image: redis
@@ -74,12 +86,16 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      
+      - name: Set grant for app user
+        run: |
+          mysql -h 127.0.0.1 --port 3306 -u root -ppassword -e "$(cat $(find ./ -name init.sql))"
 
       - name: Run tests
         env:
           RAILS_ENV: test
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+        run: cp config/database.yml.ci config/database.yml && bin/rails db:test:prepare && bin/rspec
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
