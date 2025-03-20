@@ -21,7 +21,16 @@ module App
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = "Tokyo"
+    config.active_record.default_timezone = :local
+    config.eager_load_paths << Rails.root.join("extras")
+
+    config.credentials.config_files = [
+      root.join("config/credentials.yml.enc"),
+      root.join("config/credentials/#{Rails.env}.yml.enc")
+    ]
+
+    # Edit environment-specific credentials files using:
+    # rails credentials:edit --environment development
   end
 end
