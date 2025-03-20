@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rails8-podman
+spec:
+  containers:
+    - name: app
+      image: rails8-podman-app
+      ports:
+        - containerPort: 3000
+          hostPort: 3000
+      volumeMounts:
+        - name: app-volume
+          mountPath: /rails
+      workingDir: /rails
+      env:
+        - name: RAILS_ENV
+          value: development
+        - name: TZ
+          value: Asia/Tokyo
+      securityContext:
+        privileged: true
+    - name: db
+      image: mysql:8.4
+      ports:
+        - containerPort: 3306
+          hostPort: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: MYSQL_USER
+          value: app
+        - name: MYSQL_PASSWORD
+          value: password
+        - name: TZ
+          value: Asia/Tokyo
+      volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/mysql
+        - name: db-init
+          mountPath: /docker-entrypoint-initdb.d
+
+  volumes:
+    - name: app-volume
+      hostPath:
+        path: ./
+    - name: db-data
+      emptyDir: {}
+    - name: db-init
+      hostPath:
+        path: ./docker/db/init.d
