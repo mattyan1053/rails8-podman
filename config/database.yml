@@ -5,7 +5,7 @@ default: &default
   username: app
   password: password
   timeout: 5000
-  ssl_mode: :disabled
+  ssl_mode: :required
 
 development:
   primary:
