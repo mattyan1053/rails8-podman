@@ -1,6 +1,6 @@
 # README
 
-Rails 8 + Podman kube manifests
+Rails 8 + Podman kube manifests + Tailwind CSS
 
 * Ruby version: 3.4.2
 

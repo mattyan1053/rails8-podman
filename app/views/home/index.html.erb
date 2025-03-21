@@ -1,0 +1,10 @@
+<div class="bg-gradient-to-r from-purple-500 to-pink-500 h-screen flex items-center justify-center text-white">
+  <div class="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex justify-center">
+    <div>
+      <h1 class="text-3xl font-bold mb-4">Welcome Home!</h1>
+      <p class="text-lg leading-relaxed">This is a home page.</p>
+      <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4">Click Me!</button>
+      <%= button_to "Alert!", "#", form: { data: { turbo_method: :get, turbo_confirm: "Hey!" } }, class: "bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" %>
+    </div>
+  </div>
+</div>
