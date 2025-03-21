@@ -6,6 +6,7 @@ spec:
   containers:
     - name: app
       image: rails8-podman-app
+      command: ["/bin/sh", "-c", "while :; do sleep 10; done"]
       ports:
         - containerPort: 3000
           hostPort: 3000

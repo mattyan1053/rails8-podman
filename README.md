@@ -18,4 +18,7 @@ $ podman play kube manifest.dev.yml
 
 # DB initalization
 $ podman exec rails8-podman-app bin/rails db:create db:migrate db:seed
+
+# Start development!
+$ podman exec -it rails8-podman-app bin/rails s -b 0.0.0.0
 ```
