@@ -2,9 +2,12 @@
   "name": "app",
   "private": true,
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.11",
+    "typescript": "^5.8.2"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build": "esbuild app/javascript/*.ts --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {
@@ -12,8 +15,8 @@
     "@hotwired/turbo-rails": "^8.0.13",
     "@tailwindcss/cli": "^4.0.15",
     "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.1",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.15",
-    "esbuild": "^0.25.1"
+    "tailwindcss": "^4.0.15"
   }
 }
