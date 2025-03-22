@@ -5,22 +5,21 @@ metadata:
 spec:
   containers:
     - name: app
-      image: rails8-podman-app
-      command: ["/bin/sh", "-c", "while :; do sleep 10; done"]
+      image: rails8-podman-app-dev
+      command: [ "irb" ]
       ports:
         - containerPort: 3000
           hostPort: 3000
       volumeMounts:
         - name: app-volume
-          mountPath: /rails
+          mountPath: /rails:Z
       workingDir: /rails
       env:
         - name: RAILS_ENV
           value: development
         - name: TZ
           value: Asia/Tokyo
-      securityContext:
-        privileged: true
+      tty: true
     - name: db
       image: mysql:8.4
       ports:
@@ -39,7 +38,7 @@ spec:
         - name: db-data
           mountPath: /var/lib/mysql
         - name: db-init
-          mountPath: /docker-entrypoint-initdb.d
+          mountPath: /docker-entrypoint-initdb.d:Z
 
   volumes:
     - name: app-volume
@@ -47,7 +46,7 @@ spec:
         path: ./
     - name: db-data
       persistentVolumeClaim:
-        claimName: rails8-podman-pv-claim
+        claimName: rails8-podman-pvc
     - name: db-init
       hostPath:
         path: ./docker/db/init.d

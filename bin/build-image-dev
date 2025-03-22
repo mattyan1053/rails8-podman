@@ -1,0 +1,2 @@
+#!/bin/bash
+podman build --target=development -t rails8-podman-app-dev .

@@ -89,7 +89,7 @@ jobs:
       
       - name: Set grant for app user
         run: |
-          mysql -h 127.0.0.1 --port 3306 -u root -ppassword -e "$(cat $(find ./ -name init.sql))"
+          mysql -h 127.0.0.1 --port 3306 -u root -ppassword -e "$(cat $(find ./ -name grant.sql))"
 
       - name: Run tests
         env:

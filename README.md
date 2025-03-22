@@ -8,10 +8,10 @@ Rails 8 + Podman kube manifests + Tailwind CSS
 
 ## How to Develop
 
-環境構築
+開発環境構築
 ```sh
 # Build image
-$ bin/build-image
+$ bin/build-image-dev
 
 # Start pod
 $ podman play kube manifest.dev.yml
@@ -20,5 +20,5 @@ $ podman play kube manifest.dev.yml
 $ podman exec rails8-podman-app bin/rails db:create db:migrate db:seed
 
 # Start development!
-$ podman exec -it rails8-podman-app bin/rails s -b 0.0.0.0
+$ podman exec -it rails8-podman-app bin/dev
 ```
