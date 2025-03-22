@@ -11,6 +11,9 @@ module App
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    config.i18n.default_locale = :ja
+    config.i18n.available_locales = %i[ja en]
+
     config.generators do |g|
       g.test_framework :rspec
     end

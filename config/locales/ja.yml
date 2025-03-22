@@ -27,7 +27,7 @@
 #       "yes": yup
 #       enabled: "ON"
 
-en:
+ja:
   home:
-    hello: "Hello World!"
-    this_is_home_page: "This is home page."
+    hello: "こんにちは世界！"
+    this_is_home_page: "これはトップページです。"
