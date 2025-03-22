@@ -29,6 +29,9 @@ module App
     config.active_record.default_timezone = :local
     config.eager_load_paths << Rails.root.join("extras")
 
+    config.assets.paths << Rails.root.join("app", "assets", "builds")
+    config.assets.precompile += %w[application.js application.css]
+
     config.credentials.config_files = [
       root.join("config/credentials.yml.enc"),
       root.join("config/credentials/#{Rails.env}.yml.enc")

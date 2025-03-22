@@ -8,11 +8,24 @@
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
+ARG NODE_VERSION=22.14.0
 ARG RUBY_VERSION=3.4.2
+FROM docker.io/library/node:$NODE_VERSION-slim AS node
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
 WORKDIR /rails
+
+# Copy yarn and node from node image
+COPY --from=node /opt/yarn-* /opt/yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+COPY --from=node /usr/local/lib/node_modules/ /usr/local/lib/node_modules/
+
+RUN ln -fs /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -fs /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npx \
+    && ln -fs /usr/local/lib/node /usr/local/bin/nodejs \
+    && ln -fs /opt/yarn/bin/yarn /usr/local/bin/yarn \
+    && ln -fs /opt/yarn/bin/yarn /usr/local/bin/yarnpkg
 
 # Install base packages
 RUN apt-get update -qq && \
@@ -21,6 +34,7 @@ RUN apt-get update -qq && \
 
 # Set production environment
 ENV RAILS_ENV="production" \
+    NODE_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
@@ -39,6 +53,10 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
+
+# Install yarn packages
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --check-files --production
 
 # Copy application code
 COPY . .
