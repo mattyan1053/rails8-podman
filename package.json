@@ -4,11 +4,15 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.11",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.2.6",
     "typescript": "^5.8.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.ts --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
+    "test": "jest"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
